@@ -1,5 +1,6 @@
-package com.massafra.club.integrator.schedulers;
+package com.massafra.club.integrator.scheduler;
 
+import com.massafra.club.integrator.service.FidemaxCustomerService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.javacrumbs.shedlock.spring.annotation.SchedulerLock;
@@ -11,6 +12,8 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @RequiredArgsConstructor
 public class ReprocessEventsScheduler {
+
+    private final FidemaxCustomerService service;
 
 
     @Value("${reprocessment.scheduler.least-lock-time}")
@@ -28,10 +31,11 @@ public class ReprocessEventsScheduler {
     public void checkEventsToReprocess() {
         long start = System.currentTimeMillis();
         try {
-            log.debug("ReprocessEventsScheduler.checkEventsToReprocess - Start");
+            log.info("ReprocessEventsScheduler.checkEventsToReprocess - Start");
+            service.dispatchCustomer();
 
         } finally {
-            log.debug("ReprocessEventsScheduler.checkEventsToReprocess - End - took [{}ms]", (System.currentTimeMillis() - start));
+            log.info("ReprocessEventsScheduler.checkEventsToReprocess - End - took [{}ms]", (System.currentTimeMillis() - start));
         }
     }
 }

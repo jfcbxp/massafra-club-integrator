@@ -36,6 +36,9 @@ public class FidemaxCustomer implements Serializable {
     @Column(name = "LOJA")
     private String LOJA;
 
+    @Column(name = "CGC")
+    private String cgc;
+
     @Column(name = "NOME")
     private String nome;
 

@@ -19,7 +19,7 @@ import java.time.ZoneId;
 import java.util.TimeZone;
 
 @Configuration
-public class RabbitMQConfig  {
+public class RabbitMQConfig {
 
     private static final String XDLE = "x-dead-letter-exchange";
     private static final String XDLRK = "x-dead-letter-routing-key";

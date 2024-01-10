@@ -14,7 +14,7 @@ public class SpecificationQueryFidemaxCustomerByFilter {
     public static Specification<FidemaxCustomer> findByCriteria() {
         return (root, query, cb) -> {
 
-            return cb.notEqual(root.get(HORA_INTEGRACAO), "");
+            return cb.equal(root.get(HORA_INTEGRACAO), "");
         };
     }
 }
