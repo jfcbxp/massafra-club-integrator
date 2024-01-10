@@ -29,7 +29,7 @@ public class ReprocessEventsScheduler {
             lockAtMostFor = "${reprocessment.scheduler.most-lock-time}"
     )
     public void checkEventsToReprocess() {
-        long start = System.currentTimeMillis();
+        var start = System.currentTimeMillis();
         try {
             log.info("ReprocessEventsScheduler.checkEventsToReprocess - Start");
             service.dispatchCustomer();

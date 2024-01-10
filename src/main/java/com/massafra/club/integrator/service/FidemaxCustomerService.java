@@ -1,25 +1,23 @@
 package com.massafra.club.integrator.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.massafra.club.integrator.constant.FidemaxCustomerInternalParams;
 import com.massafra.club.integrator.constant.RabbitMq;
-import com.massafra.club.integrator.domain.FidemaxCustomer;
-import com.massafra.club.integrator.dto.FidemaxCustomerDTO;
 import com.massafra.club.integrator.publisher.Publisher;
+import com.massafra.club.integrator.record.FidemaxCustomerRecord;
 import com.massafra.club.integrator.repository.FidemaxCustomerRepository;
-import com.massafra.club.integrator.specification.SpecificationQueryFidemaxCustomerByFilter;
+import com.massafra.club.integrator.specification.SpecificationFidemaxCustomer;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Service
 @Slf4j
@@ -34,24 +32,32 @@ public class FidemaxCustomerService {
 
     @Transactional(rollbackOn = Exception.class)
     public void dispatchCustomer() {
-        Sort sortBy = Sort.by(Direction.valueOf(FidemaxCustomerInternalParams.PAGINATE_SORT_DIRECTION_DEFAULT),
+        log.info("FidemaxCustomerService.dispatchCustomer - Start");
+
+        var sortBy = Sort.by(Direction.valueOf(FidemaxCustomerInternalParams.PAGINATE_SORT_DIRECTION_DEFAULT),
                 FidemaxCustomerInternalParams.PAGINATE_SORT_PROPERTIES_DEFAULT);
 
-        PageRequest page = PageRequest.of(FidemaxCustomerInternalParams.PAGINATE_PAGE_DEFAULT, FidemaxCustomerInternalParams.PAGINATE_ROWS_DEFAULT, sortBy);
+        var page = PageRequest.of(FidemaxCustomerInternalParams.PAGINATE_PAGE_DEFAULT, FidemaxCustomerInternalParams.PAGINATE_ROWS_DEFAULT, sortBy);
 
-        Page<FidemaxCustomer> customers = repository.findAll(SpecificationQueryFidemaxCustomerByFilter.findByCriteria(),
+        var customers = repository.findAll(SpecificationFidemaxCustomer.findByCriteria(),
                 page);
+
+        var date = ZonedDateTime.now(ZoneId.of("UTC-3"));
+        var integrationTime = date.getHour() + ":" + date.getMinute();
+        var integrationDate = date.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+
 
         customers.forEach(customer -> {
             try {
-                customer.setDataIntegracao(LocalDate.now());
-                customer.setHoraIntegracao(LocalDateTime.now().getHour() + ":" + LocalDateTime.MAX.getMinute());
-                //repository.save(customer);
-                publisher.sendAsMessage(RabbitMq.EXCHANGE_CLUB, RabbitMq.CREATE_CUSTOMER_ROUTING_KEY, mapper.map(customer, FidemaxCustomerDTO.class));
-            } catch (JsonProcessingException e) {
+                repository.updateIntegration(customer.getId(), integrationTime, integrationDate);
+                publisher.sendAsMessage(RabbitMq.EXCHANGE_CLUB, RabbitMq.CREATE_CUSTOMER_ROUTING_KEY, mapper.map(customer, FidemaxCustomerRecord.class));
+            } catch (Exception e) {
+                log.error("FidemaxCustomerService.dispatchCustomer - Error - message: {}", e.getMessage(), e);
                 throw new RuntimeException(e);
             }
         });
+
+        log.info("FidemaxCustomerService.dispatchCustomer - End");
 
     }
 }

@@ -15,7 +15,7 @@ public class ModelMapperConfig {
     @Bean
     public ModelMapper modelMapper() {
 
-        final ModelMapper modelMapper = new ModelMapper();
+        final var modelMapper = new ModelMapper();
 
         modelMapper.addConverter(fidemaxCustomerConverter);
 

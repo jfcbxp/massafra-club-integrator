@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class SpecificationQueryFidemaxCustomerByFilter {
+public class SpecificationFidemaxCustomer {
 
     private static final String HORA_INTEGRACAO = "horaIntegracao";
 

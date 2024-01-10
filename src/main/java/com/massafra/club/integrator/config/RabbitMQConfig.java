@@ -26,7 +26,7 @@ public class RabbitMQConfig {
 
     @Bean
     public MessageConverter jsonMessageConverter() {
-        ObjectMapper objectMapper = new ObjectMapper();
+        var objectMapper = new ObjectMapper();
         objectMapper.registerModule(new JavaTimeModule());
         objectMapper.disable(DeserializationFeature.ADJUST_DATES_TO_CONTEXT_TIME_ZONE);
         objectMapper.setTimeZone(TimeZone.getTimeZone(ZoneId.of("America/Sao_Paulo")));
@@ -77,7 +77,7 @@ public class RabbitMQConfig {
         return QueueBuilder.durable(RabbitMq.CREATE_CUSTOMER_QUEUE)
                 .withArgument(XDLE, RabbitMq.EXCHANGE_DEAD_CLUB)
                 .withArgument(XDLRK, RabbitMq.CREATE_CUSTOMER_ROUTING_KEY)
-                .ttl(10000)
+                //.ttl(10000)
                 .build();
     }
 

@@ -2,15 +2,15 @@ package com.massafra.club.integrator.converter;
 
 
 import com.massafra.club.integrator.domain.FidemaxCustomer;
-import com.massafra.club.integrator.dto.FidemaxCustomerDTO;
+import com.massafra.club.integrator.record.FidemaxCustomerRecord;
 import org.modelmapper.AbstractConverter;
 import org.springframework.stereotype.Component;
 
 @Component
-public class FidemaxCustomerConverter extends AbstractConverter<FidemaxCustomer, FidemaxCustomerDTO> {
+public class FidemaxCustomerConverter extends AbstractConverter<FidemaxCustomer, FidemaxCustomerRecord> {
     @Override
-    protected FidemaxCustomerDTO convert(FidemaxCustomer fidemaxCustomer) {
-        return new FidemaxCustomerDTO(fidemaxCustomer.getNome(),
+    protected FidemaxCustomerRecord convert(FidemaxCustomer fidemaxCustomer) {
+        return new FidemaxCustomerRecord(fidemaxCustomer.getNome(),
                 fidemaxCustomer.getCgc(),
                 fidemaxCustomer.getDataNascimento(),
                 fidemaxCustomer.getDdd() + fidemaxCustomer.getTelefone(),
