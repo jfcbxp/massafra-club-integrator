@@ -76,7 +76,7 @@ public class RabbitMQConfig {
     public Queue customerCreateQueue() {
         return QueueBuilder.durable(RabbitMq.CREATE_CUSTOMER_QUEUE)
                 .withArgument(XDLE, RabbitMq.EXCHANGE_DEAD_CLUB)
-                .withArgument(XDLRK, RabbitMq.CREATE_CUSTOMER_ROUTING_KEY)
+                .withArgument(XDLRK, RabbitMq.CREATE_CUSTOMER_DEAD_ROUTING_KEY)
                 //.ttl(10000)
                 .build();
     }
