@@ -45,6 +45,15 @@ public class FidemaxCustomer implements Serializable {
     @Column(name = "ENDERECO")
     private String endereco;
 
+    @Column(name = "CEP")
+    private String cep;
+
+    @Column(name = "BAIRRO")
+    private String bairro;
+
+    @Column(name = "COMPLEMENTO")
+    private String complemento;
+
     @Column(name = "DATA_NASCIMENTO")
     private LocalDate dataNascimento;
 

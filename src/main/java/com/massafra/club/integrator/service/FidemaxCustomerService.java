@@ -3,7 +3,7 @@ package com.massafra.club.integrator.service;
 import com.massafra.club.integrator.constant.FidemaxCustomerInternalParams;
 import com.massafra.club.integrator.constant.RabbitMq;
 import com.massafra.club.integrator.publisher.Publisher;
-import com.massafra.club.integrator.record.FidemaxCustomerRecord;
+import com.massafra.club.integrator.record.FidemaxCustomerInternalRecord;
 import com.massafra.club.integrator.repository.FidemaxCustomerRepository;
 import com.massafra.club.integrator.specification.SpecificationFidemaxCustomer;
 import jakarta.transaction.Transactional;
@@ -50,7 +50,8 @@ public class FidemaxCustomerService {
         customers.forEach(customer -> {
             try {
                 repository.updateIntegration(customer.getId(), integrationTime, integrationDate);
-                publisher.sendAsMessage(RabbitMq.EXCHANGE_CLUB, RabbitMq.CREATE_CUSTOMER_ROUTING_KEY, mapper.map(customer, FidemaxCustomerRecord.class));
+
+                publisher.sendAsMessage(RabbitMq.EXCHANGE_CLUB, RabbitMq.CREATE_CUSTOMER_ROUTING_KEY, mapper.map(customer, FidemaxCustomerInternalRecord.class));
             } catch (Exception e) {
                 log.error("FidemaxCustomerService.dispatchCustomer - Error - message: {}", e.getMessage(), e);
                 throw new RuntimeException(e);
