@@ -1,4 +1,4 @@
-package com.massafra.club.integrator.constant;
+package com.massafra.club.integrator.constants;
 
 public final class FidemaxCustomerInternalParams {
 

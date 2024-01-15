@@ -1,11 +1,11 @@
-package com.massafra.club.integrator.service;
+package com.massafra.club.integrator.services;
 
-import com.massafra.club.integrator.constant.FidemaxCustomerInternalParams;
-import com.massafra.club.integrator.constant.RabbitMq;
-import com.massafra.club.integrator.publisher.Publisher;
-import com.massafra.club.integrator.record.FidemaxCustomerInternalRecord;
-import com.massafra.club.integrator.repository.FidemaxCustomerRepository;
-import com.massafra.club.integrator.specification.SpecificationFidemaxCustomer;
+import com.massafra.club.integrator.constants.FidemaxCustomerInternalParams;
+import com.massafra.club.integrator.constants.RabbitMq;
+import com.massafra.club.integrator.publishers.Publisher;
+import com.massafra.club.integrator.records.FidemaxCustomerInternalRecord;
+import com.massafra.club.integrator.repositorys.FidemaxCustomerRepository;
+import com.massafra.club.integrator.specifications.SpecificationFidemaxCustomer;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -49,7 +49,7 @@ public class FidemaxCustomerService {
 
         customers.forEach(customer -> {
             try {
-                repository.updateIntegration(customer.getId(), integrationTime, integrationDate);
+                //repository.updateIntegration(customer.getId(), integrationTime, integrationDate);
 
                 publisher.sendAsMessage(RabbitMq.EXCHANGE_CLUB, RabbitMq.CREATE_CUSTOMER_ROUTING_KEY, mapper.map(customer, FidemaxCustomerInternalRecord.class));
             } catch (Exception e) {

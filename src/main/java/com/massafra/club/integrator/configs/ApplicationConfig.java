@@ -1,4 +1,4 @@
-package com.massafra.club.integrator.config;
+package com.massafra.club.integrator.configs;
 
 import net.javacrumbs.shedlock.spring.annotation.EnableSchedulerLock;
 import org.springframework.context.annotation.Configuration;

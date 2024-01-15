@@ -1,4 +1,4 @@
-package com.massafra.club.integrator.domain;
+package com.massafra.club.integrator.domains;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -41,6 +41,9 @@ public class FidemaxCustomer implements Serializable {
 
     @Column(name = "NOME")
     private String nome;
+
+    @Column(name = "EMAIL")
+    private String email;
 
     @Column(name = "ENDERECO")
     private String endereco;

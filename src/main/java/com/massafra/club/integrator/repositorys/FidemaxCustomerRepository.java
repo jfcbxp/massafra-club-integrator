@@ -1,6 +1,6 @@
-package com.massafra.club.integrator.repository;
+package com.massafra.club.integrator.repositorys;
 
-import com.massafra.club.integrator.domain.FidemaxCustomer;
+import com.massafra.club.integrator.domains.FidemaxCustomer;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

@@ -1,10 +1,10 @@
-package com.massafra.club.integrator.config;
+package com.massafra.club.integrator.configs;
 
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.massafra.club.integrator.constant.RabbitMq;
+import com.massafra.club.integrator.constants.RabbitMq;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.Declarables;
 import org.springframework.amqp.core.DirectExchange;

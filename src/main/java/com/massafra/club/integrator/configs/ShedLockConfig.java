@@ -1,4 +1,4 @@
-package com.massafra.club.integrator.config;
+package com.massafra.club.integrator.configs;
 
 import net.javacrumbs.shedlock.core.LockProvider;
 import net.javacrumbs.shedlock.provider.jdbctemplate.JdbcTemplateLockProvider;

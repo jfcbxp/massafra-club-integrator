@@ -1,4 +1,4 @@
-package com.massafra.club.integrator.constant;
+package com.massafra.club.integrator.constants;
 
 import lombok.NoArgsConstructor;
 
@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 public final class RabbitMq {
     private static final String DEAD_SUFFIX = ".dead";
     public static final String EXCHANGE_CLUB = "club.exchange";
-    public static final String EXCHANGE_DEAD_CLUB = EXCHANGE_CLUB + DEAD_SUFFIX ;
+    public static final String EXCHANGE_DEAD_CLUB = EXCHANGE_CLUB + DEAD_SUFFIX;
     private static final String CLUB_QUEUE_PREFIX = "club.";
 
     //ORDER

@@ -1,4 +1,4 @@
-package com.massafra.club.integrator.publisher;
+package com.massafra.club.integrator.publishers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -37,7 +37,7 @@ public class Publisher {
         var payloadAsString = mapper.writeValueAsString(body);
 
         rabbitTemplate.convertAndSend(exchange, routingKey, payloadAsString);
-        
+
         log.info("Publisher.sendAsString - Processed - exchange [{}] routingKey [{}]", exchange, routingKey);
     }
 

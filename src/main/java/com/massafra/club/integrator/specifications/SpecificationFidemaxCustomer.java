@@ -1,7 +1,7 @@
-package com.massafra.club.integrator.specification;
+package com.massafra.club.integrator.specifications;
 
 
-import com.massafra.club.integrator.domain.FidemaxCustomer;
+import com.massafra.club.integrator.domains.FidemaxCustomer;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;

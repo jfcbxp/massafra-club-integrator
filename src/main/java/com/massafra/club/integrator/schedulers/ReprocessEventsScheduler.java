@@ -1,6 +1,6 @@
-package com.massafra.club.integrator.scheduler;
+package com.massafra.club.integrator.schedulers;
 
-import com.massafra.club.integrator.service.FidemaxCustomerService;
+import com.massafra.club.integrator.services.FidemaxCustomerService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.javacrumbs.shedlock.spring.annotation.SchedulerLock;

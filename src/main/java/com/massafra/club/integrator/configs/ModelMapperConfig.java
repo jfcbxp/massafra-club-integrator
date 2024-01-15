@@ -1,7 +1,7 @@
-package com.massafra.club.integrator.config;
+package com.massafra.club.integrator.configs;
 
 
-import com.massafra.club.integrator.converter.FidemaxCustomerConverter;
+import com.massafra.club.integrator.converters.FidemaxCustomerConverter;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
