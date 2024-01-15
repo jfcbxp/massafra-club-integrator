@@ -1,7 +1,7 @@
 package com.massafra.club.integrator.services;
 
 import com.massafra.club.integrator.constants.FidemaxCustomerInternalParams;
-import com.massafra.club.integrator.constants.RabbitMq;
+import com.massafra.club.integrator.constants.RabbitMQ;
 import com.massafra.club.integrator.publishers.Publisher;
 import com.massafra.club.integrator.records.FidemaxCustomerInternalRecord;
 import com.massafra.club.integrator.repositorys.FidemaxCustomerRepository;
@@ -30,7 +30,6 @@ public class FidemaxCustomerService {
 
     private final Publisher publisher;
 
-    @Transactional(rollbackOn = Exception.class)
     public void dispatchCustomer() {
         log.info("FidemaxCustomerService.dispatchCustomer - Start");
 
@@ -42,16 +41,10 @@ public class FidemaxCustomerService {
         var customers = repository.findAll(SpecificationFidemaxCustomer.findByCriteria(),
                 page);
 
-        var date = ZonedDateTime.now(ZoneId.of("UTC-3"));
-        var integrationTime = date.getHour() + ":" + date.getMinute();
-        var integrationDate = date.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
-
 
         customers.forEach(customer -> {
             try {
-                //repository.updateIntegration(customer.getId(), integrationTime, integrationDate);
-
-                publisher.sendAsMessage(RabbitMq.EXCHANGE_CLUB, RabbitMq.CREATE_CUSTOMER_ROUTING_KEY, mapper.map(customer, FidemaxCustomerInternalRecord.class));
+                publisher.sendAsMessage(RabbitMQ.EXCHANGE_CLUB, RabbitMQ.CREATE_CUSTOMER_ROUTING_KEY, mapper.map(customer, FidemaxCustomerInternalRecord.class));
             } catch (Exception e) {
                 log.error("FidemaxCustomerService.dispatchCustomer - Error - message: {}", e.getMessage(), e);
                 throw new RuntimeException(e);
@@ -61,4 +54,20 @@ public class FidemaxCustomerService {
         log.info("FidemaxCustomerService.dispatchCustomer - End");
 
     }
+
+    @Transactional(rollbackOn = Exception.class)
+    public void dispatchedCustomer(Integer id) {
+        log.info("FidemaxCustomerService.dispatchedCustomer - Start");
+
+        var date = ZonedDateTime.now(ZoneId.of("UTC-3"));
+        var integrationTime = date.getHour() + ":" + date.getMinute();
+        var integrationDate = date.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+
+        repository.updateIntegration(id, integrationTime, integrationDate);
+
+        log.info("FidemaxCustomerService.dispatchedCustomer - End");
+
+    }
+
+
 }

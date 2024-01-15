@@ -61,7 +61,7 @@ reprocessment:
   max-retires: 10
   pulse-interval: 5
   scheduler:
-    cron-value: 0 * * * * *
+    cron-value: 0 0 0 * * *
     least-lock-time: PT30s
     most-lock-time: PT1M
     limit-rows: 200

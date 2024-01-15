@@ -19,6 +19,7 @@ public class FidemaxCustomerConverter extends AbstractConverter<FidemaxCustomer,
                 fidemaxCustomer.getEndereco(),
                 fidemaxCustomer.getCep(),
                 fidemaxCustomer.getBairro(),
-                fidemaxCustomer.getComplemento());
+                fidemaxCustomer.getComplemento(),
+                fidemaxCustomer.getId());
     }
 }

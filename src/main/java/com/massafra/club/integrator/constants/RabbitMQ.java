@@ -3,7 +3,7 @@ package com.massafra.club.integrator.constants;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
-public final class RabbitMq {
+public final class RabbitMQ {
     private static final String DEAD_SUFFIX = ".dead";
     public static final String EXCHANGE_CLUB = "club.exchange";
     public static final String EXCHANGE_DEAD_CLUB = EXCHANGE_CLUB + DEAD_SUFFIX;
@@ -20,4 +20,11 @@ public final class RabbitMq {
     public static final String CREATE_CUSTOMER_QUEUE = CLUB_QUEUE_PREFIX + CREATE_CUSTOMER_ROUTING_KEY;
     public static final String CREATE_CUSTOMER_QUEUE_DEAD = CREATE_CUSTOMER_QUEUE + DEAD_SUFFIX;
     public static final String CREATE_CUSTOMER_DEAD_ROUTING_KEY = CREATE_CUSTOMER_ROUTING_KEY + DEAD_SUFFIX;
+
+    //CUSTOMER DISPATCHED
+
+    public static final String DISPATCHED_CUSTOMER_ROUTING_KEY = "dispatched.customer";
+    public static final String DISPATCHED_CUSTOMER_QUEUE = CLUB_QUEUE_PREFIX + DISPATCHED_CUSTOMER_ROUTING_KEY;
+    public static final String DISPATCHED_CUSTOMER_QUEUE_DEAD = DISPATCHED_CUSTOMER_QUEUE + DEAD_SUFFIX;
+    public static final String DISPATCHED_CUSTOMER_DEAD_ROUTING_KEY = DISPATCHED_CUSTOMER_ROUTING_KEY + DEAD_SUFFIX;
 }

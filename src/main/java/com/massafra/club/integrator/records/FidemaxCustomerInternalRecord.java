@@ -11,5 +11,6 @@ public record FidemaxCustomerInternalRecord(String name,
                                             String street,
                                             String zipCode,
                                             String neighborhood,
-                                            String complement) {
+                                            String complement,
+                                            Integer id) {
 }
