@@ -57,11 +57,11 @@ management:
 schedulers:
   default-most-lock-time: PT30M
 
-reprocessment:
+create-customer:
   max-retires: 10
   pulse-interval: 5
   scheduler:
-    cron-value: 0 0 0 * * *
+    cron-value: ${CRON_VALUE:0 * * * * *}
     least-lock-time: PT30s
     most-lock-time: PT1M
     limit-rows: 200

@@ -11,31 +11,31 @@ import org.springframework.stereotype.Component;
 @Component
 @Slf4j
 @RequiredArgsConstructor
-public class ReprocessEventsScheduler {
+public class CreateCustomerScheduler {
 
     private final FidemaxCustomerService service;
 
 
-    @Value("${reprocessment.scheduler.least-lock-time}")
+    @Value("${create-customer.scheduler.least-lock-time}")
     private String leastLockTimeString;
 
     @Scheduled(
-            cron = "${reprocessment.scheduler.cron-value}",
+            cron = "${create-customer.scheduler.cron-value}",
             zone = "America/Sao_Paulo"
     )
     @SchedulerLock(
             name = "REPROCESS_EVENTS",
-            lockAtLeastFor = "${reprocessment.scheduler.least-lock-time}",
-            lockAtMostFor = "${reprocessment.scheduler.most-lock-time}"
+            lockAtLeastFor = "${create-customer.scheduler.least-lock-time}",
+            lockAtMostFor = "${create-customer.scheduler.most-lock-time}"
     )
-    public void checkEventsToReprocess() {
+    public void checkIncomingCustomers() {
         var start = System.currentTimeMillis();
         try {
-            log.info("ReprocessEventsScheduler.checkEventsToReprocess - Start");
+            log.info("CreateCustomerScheduler.checkIncomingCustomers - Start");
             service.dispatchCustomer();
 
         } finally {
-            log.info("ReprocessEventsScheduler.checkEventsToReprocess - End - took [{}ms]", (System.currentTimeMillis() - start));
+            log.info("CreateCustomerScheduler.checkIncomingCustomers - End - took [{}ms]", (System.currentTimeMillis() - start));
         }
     }
 }
