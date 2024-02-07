@@ -50,7 +50,6 @@ public class RabbitMQConfig {
         return QueueBuilder.durable(RabbitMQ.CREATE_ORDER_QUEUE)
                 .withArgument(XDLE, RabbitMQ.EXCHANGE_DEAD_CLUB)
                 .withArgument(XDLRK, RabbitMQ.CREATE_ORDER_DEAD_ROUTING_KEY)
-                .ttl(10000)
                 .build();
     }
 
@@ -77,7 +76,6 @@ public class RabbitMQConfig {
         return QueueBuilder.durable(RabbitMQ.CREATE_CUSTOMER_QUEUE)
                 .withArgument(XDLE, RabbitMQ.EXCHANGE_DEAD_CLUB)
                 .withArgument(XDLRK, RabbitMQ.CREATE_CUSTOMER_DEAD_ROUTING_KEY)
-                //.ttl(10000)
                 .build();
     }
 

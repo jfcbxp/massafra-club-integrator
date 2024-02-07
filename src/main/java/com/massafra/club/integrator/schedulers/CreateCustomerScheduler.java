@@ -24,7 +24,7 @@ public class CreateCustomerScheduler {
             zone = "America/Sao_Paulo"
     )
     @SchedulerLock(
-            name = "REPROCESS_EVENTS",
+            name = "CREATE_CUSTOMERS",
             lockAtLeastFor = "${create-customer.scheduler.least-lock-time}",
             lockAtMostFor = "${create-customer.scheduler.most-lock-time}"
     )

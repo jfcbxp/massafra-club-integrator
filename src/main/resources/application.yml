@@ -65,3 +65,12 @@ create-customer:
     least-lock-time: PT30s
     most-lock-time: PT1M
     limit-rows: 200
+
+create-order:
+  max-retires: 10
+  pulse-interval: 5
+  scheduler:
+    cron-value: ${CRON_VALUE:0 */20 5-6 * * *}
+    least-lock-time: PT30s
+    most-lock-time: PT1M
+    limit-rows: 200

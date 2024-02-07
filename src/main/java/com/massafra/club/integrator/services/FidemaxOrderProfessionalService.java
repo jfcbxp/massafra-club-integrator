@@ -1,7 +1,9 @@
 package com.massafra.club.integrator.services;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.massafra.club.integrator.constants.FidemaxCustomerInternalParams;
 import com.massafra.club.integrator.constants.RabbitMQ;
+import com.massafra.club.integrator.domains.FidemaxOrderProfessional;
 import com.massafra.club.integrator.publishers.Publisher;
 import com.massafra.club.integrator.records.FidemaxLoyaltynternalRecord;
 import com.massafra.club.integrator.repositorys.FidemaxOrderProfessionalRepository;
@@ -29,6 +31,7 @@ public class FidemaxOrderProfessionalService {
 
     private final Publisher publisher;
 
+    @Transactional(rollbackOn = Exception.class)
     public void dispatchSaleOrder() {
         log.info("FidemaxOrderProfessionalService.dispatchSaleOrder - Start");
 
@@ -37,32 +40,46 @@ public class FidemaxOrderProfessionalService {
 
         var page = PageRequest.of(FidemaxCustomerInternalParams.PAGINATE_PAGE_DEFAULT, FidemaxCustomerInternalParams.PAGINATE_ROWS_DEFAULT, sortBy);
 
-        var orders = repository.findAll(page).map(order -> mapper.map(order, FidemaxLoyaltynternalRecord.class));
-
-
-        orders.forEach(order -> {
-            try {
-                publisher.sendAsMessage(RabbitMQ.EXCHANGE_CLUB, RabbitMQ.CREATE_ORDER_ROUTING_KEY, order);
-            } catch (Exception e) {
-                log.error("FidemaxCustomerService.dispatchCustomer - Error - message: {}", e.getMessage(), e);
-                throw new RuntimeException(e);
-            }
-        });
+        repository.findAll(page).forEach(this::dispatchLoyalty);
 
         log.info("FidemaxOrderProfessionalService.dispatchSaleOrder - End");
 
     }
 
-    @Transactional(rollbackOn = Exception.class)
-    public void dispatchedCustomer(Integer id) {
-        log.info("FidemaxOrderProfessionalService.dispatchedCustomer - Start");
+
+    private void dispatchLoyalty(FidemaxOrderProfessional order) {
+        log.info("FidemaxOrderProfessionalService.dispatchLoyalty - Start");
+
+        dispatchedOrder(order.getId());
+
+        var loyaltys = order.getProdutos().stream()
+                .map(product -> mapper.map(product, FidemaxLoyaltynternalRecord.class))
+                .filter(loyalty -> loyalty.points().signum() == 1).toList();
+
+        loyaltys.forEach(loyalty -> {
+            try {
+                publisher.sendAsMessage(RabbitMQ.EXCHANGE_CLUB, RabbitMQ.CREATE_ORDER_ROUTING_KEY, loyalty);
+            } catch (JsonProcessingException e) {
+                log.error("FidemaxCustomerService.dispatchLoyalty - Error - message: {}", e.getMessage(), e);
+                throw new RuntimeException(e);
+            }
+
+
+        });
+
+        log.info("FidemaxOrderProfessionalService.dispatchLoyalty - End");
+
+    }
+
+    private void dispatchedOrder(Integer id) {
+        log.info("FidemaxOrderProfessionalService.dispatchedOrder - Start");
 
         var date = ZonedDateTime.now(ZoneId.of("UTC-3"));
         var integrationDate = date.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
 
         repository.updateIntegration(id, integrationDate);
 
-        log.info("FidemaxOrderProfessionalService.dispatchedCustomer - End");
+        log.info("FidemaxOrderProfessionalService.dispatchedOrder - End");
 
     }
 

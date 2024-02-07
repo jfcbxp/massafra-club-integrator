@@ -23,7 +23,7 @@ import java.math.BigDecimal;
 @Setter
 @Builder
 @Entity
-@Table(name = "FIDEMAX_ORDER_PROFESSIONAL")
+@Table(name = "FIDEMAX_ORDER_ITEMS_PROFESSIONAL")
 public class FidemaxOrderItemProfessional implements Serializable {
 
     @Serial
@@ -42,6 +42,9 @@ public class FidemaxOrderItemProfessional implements Serializable {
     @Column(name = "SERIE")
     private String serie;
 
+    @Column(name = "ITEM")
+    private String item;
+
     @Column(name = "CODIGO")
     private String codigoProduto;
 
@@ -50,6 +53,9 @@ public class FidemaxOrderItemProfessional implements Serializable {
 
     @Column(name = "PRECO_VENDA")
     private BigDecimal precoVenda;
+
+    @Column(name = "TOTAL")
+    private BigDecimal total;
 
     @Column(name = "PERCENTUAL_GRUPO")
     private BigDecimal percentualGrupo;
