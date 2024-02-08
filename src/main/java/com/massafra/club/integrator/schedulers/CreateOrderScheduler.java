@@ -1,6 +1,7 @@
 package com.massafra.club.integrator.schedulers;
 
 import com.massafra.club.integrator.services.FidemaxOrderProfessionalService;
+import com.massafra.club.integrator.services.FidemaxOrderRefundProfessionalService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.javacrumbs.shedlock.spring.annotation.SchedulerLock;
@@ -14,7 +15,7 @@ import org.springframework.stereotype.Component;
 public class CreateOrderScheduler {
 
     private final FidemaxOrderProfessionalService service;
-
+    private final FidemaxOrderRefundProfessionalService refundService;
 
     @Value("${create-order.scheduler.least-lock-time}")
     private String leastLockTimeString;
@@ -33,6 +34,7 @@ public class CreateOrderScheduler {
         try {
             log.info("FidemaxOrderProfessionalService.checkIncomingOrders - Start");
             service.dispatchSaleOrder();
+            refundService.dispatchSaleOrderRefund();
 
         } finally {
             log.info("FidemaxOrderProfessionalService.checkIncomingOrders - End - took [{}ms]", (System.currentTimeMillis() - start));

@@ -71,6 +71,6 @@ create-order:
   pulse-interval: 5
   scheduler:
     cron-value: ${CRON_VALUE:0 */20 5-6 * * *}
-    least-lock-time: PT30s
-    most-lock-time: PT1M
+    least-lock-time: PT10M
+    most-lock-time: PT20M
     limit-rows: 200

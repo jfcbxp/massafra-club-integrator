@@ -3,6 +3,7 @@ package com.massafra.club.integrator.configs;
 
 import com.massafra.club.integrator.converters.FidemaxCustomerConverter;
 import com.massafra.club.integrator.converters.FidemaxOrderItemProfessionalConverter;
+import com.massafra.club.integrator.converters.FidemaxOrderRefundItemProfessionalConverter;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
@@ -13,6 +14,8 @@ import org.springframework.context.annotation.Configuration;
 public class ModelMapperConfig {
     private final FidemaxCustomerConverter fidemaxCustomerConverter;
     private final FidemaxOrderItemProfessionalConverter fidemaxOrderItemProfessionalConverter;
+    private final FidemaxOrderRefundItemProfessionalConverter fidemaxOrderRefundItemProfessionalConverter;
+
 
     @Bean
     public ModelMapper modelMapper() {
@@ -21,6 +24,7 @@ public class ModelMapperConfig {
 
         modelMapper.addConverter(fidemaxCustomerConverter);
         modelMapper.addConverter(fidemaxOrderItemProfessionalConverter);
+        modelMapper.addConverter(fidemaxOrderRefundItemProfessionalConverter);
 
         return modelMapper;
     }
