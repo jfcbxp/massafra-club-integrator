@@ -1,7 +1,7 @@
 package com.massafra.club.integrator.converters;
 
 
-import com.massafra.club.integrator.domains.FidemaxOrderProfessional;
+import com.massafra.club.integrator.domains.FidemaxOrderRefundProfessional;
 import com.massafra.club.integrator.enums.PointsTypeEnum;
 import com.massafra.club.integrator.records.FidemaxLoyaltynternalRecord;
 import org.modelmapper.AbstractConverter;
@@ -14,20 +14,20 @@ import java.util.EnumMap;
 import java.util.Map;
 
 @Component
-public class FidemaxOrderProfessionalConverter extends AbstractConverter<FidemaxOrderProfessional, FidemaxLoyaltynternalRecord> {
+public class FidemaxOrderRefundProfessionalConverter extends AbstractConverter<FidemaxOrderRefundProfessional, FidemaxLoyaltynternalRecord> {
     @Override
-    protected FidemaxLoyaltynternalRecord convert(FidemaxOrderProfessional order) {
+    protected FidemaxLoyaltynternalRecord convert(FidemaxOrderRefundProfessional order) {
         return new FidemaxLoyaltynternalRecord(
                 order.getCgc(),
                 order.getDdd().concat(order.getTelefone()),
                 this.getPoints(order),
                 order.getDocumento(),
                 order.getEmpresa().concat(order.getDocumento()).concat(order.getSerie()),
-                false);
+                true);
 
     }
 
-    private BigInteger getPoints(FidemaxOrderProfessional order) {
+    private BigInteger getPoints(FidemaxOrderRefundProfessional order) {
         return order.getProdutos().stream().map(item -> {
             Map<PointsTypeEnum, BigDecimal> multipliers = new EnumMap<>(PointsTypeEnum.class);
             multipliers.put(PointsTypeEnum.PROFESSIONAL, order.getPercentualTipoProfissional());
@@ -38,7 +38,7 @@ public class FidemaxOrderProfessionalConverter extends AbstractConverter<Fidemax
 
             if (multiplier.signum() != 1)
                 return BigInteger.ZERO;
-
+            
             return item.getTotal()
                     .multiply(multiplier)
                     .toBigInteger();

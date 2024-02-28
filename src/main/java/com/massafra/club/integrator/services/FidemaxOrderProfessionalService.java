@@ -52,21 +52,15 @@ public class FidemaxOrderProfessionalService {
 
         dispatchedOrder(order.getId());
 
-        var loyaltys = order.getProdutos().stream()
-                .map(product -> mapper.map(product, FidemaxLoyaltynternalRecord.class))
-                .filter(loyalty -> loyalty.points().signum() == 1).toList();
+        var loyalty = mapper.map(order, FidemaxLoyaltynternalRecord.class);
 
-        loyaltys.forEach(loyalty -> {
-            try {
-                publisher.sendAsMessage(RabbitMQ.EXCHANGE_CLUB, RabbitMQ.CREATE_ORDER_ROUTING_KEY, loyalty);
-            } catch (JsonProcessingException e) {
-                log.error("FidemaxCustomerService.dispatchLoyalty - Error - message: {}", e.getMessage(), e);
-                throw new RuntimeException(e);
-            }
-
-
-        });
-
+        try {
+            publisher.sendAsMessage(RabbitMQ.EXCHANGE_CLUB, RabbitMQ.CREATE_ORDER_ROUTING_KEY, loyalty);
+        } catch (JsonProcessingException e) {
+            log.error("FidemaxCustomerService.dispatchLoyalty - Error - message: {}", e.getMessage(), e);
+            throw new RuntimeException(e);
+        }
+        
         log.info("FidemaxOrderProfessionalService.dispatchLoyalty - End");
 
     }
