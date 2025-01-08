@@ -6,7 +6,7 @@ import com.massafra.club.integrator.constants.RabbitMQ;
 import com.massafra.club.integrator.domains.FidemaxOrderRefundProfessional;
 import com.massafra.club.integrator.publishers.Publisher;
 import com.massafra.club.integrator.records.FidemaxLoyaltynternalRecord;
-import com.massafra.club.integrator.repositorys.FidemaxOrderRefundProfessionalRepository;
+import com.massafra.club.integrator.repositories.FidemaxOrderRefundProfessionalRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

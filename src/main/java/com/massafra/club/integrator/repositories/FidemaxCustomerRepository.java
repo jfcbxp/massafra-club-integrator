@@ -1,4 +1,4 @@
-package com.massafra.club.integrator.repositorys;
+package com.massafra.club.integrator.repositories;
 
 import com.massafra.club.integrator.domains.FidemaxCustomer;
 import jakarta.transaction.Transactional;

@@ -6,7 +6,7 @@ import com.massafra.club.integrator.constants.RabbitMQ;
 import com.massafra.club.integrator.domains.FidemaxOrderProfessional;
 import com.massafra.club.integrator.publishers.Publisher;
 import com.massafra.club.integrator.records.FidemaxLoyaltynternalRecord;
-import com.massafra.club.integrator.repositorys.FidemaxOrderProfessionalRepository;
+import com.massafra.club.integrator.repositories.FidemaxOrderProfessionalRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -60,7 +60,7 @@ public class FidemaxOrderProfessionalService {
             log.error("FidemaxCustomerService.dispatchLoyalty - Error - message: {}", e.getMessage(), e);
             throw new RuntimeException(e);
         }
-        
+
         log.info("FidemaxOrderProfessionalService.dispatchLoyalty - End");
 
     }

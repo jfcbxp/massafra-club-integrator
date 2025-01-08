@@ -4,7 +4,7 @@ import com.massafra.club.integrator.constants.FidemaxCustomerInternalParams;
 import com.massafra.club.integrator.constants.RabbitMQ;
 import com.massafra.club.integrator.publishers.Publisher;
 import com.massafra.club.integrator.records.FidemaxCustomerInternalRecord;
-import com.massafra.club.integrator.repositorys.FidemaxCustomerRepository;
+import com.massafra.club.integrator.repositories.FidemaxCustomerRepository;
 import com.massafra.club.integrator.specifications.SpecificationFidemaxCustomer;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;

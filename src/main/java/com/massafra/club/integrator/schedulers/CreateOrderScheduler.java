@@ -34,7 +34,6 @@ public class CreateOrderScheduler {
         try {
             log.info("FidemaxOrderProfessionalService.checkIncomingOrders - Start");
             service.dispatchSaleOrder();
-            refundService.dispatchSaleOrderRefund();
 
         } finally {
             log.info("FidemaxOrderProfessionalService.checkIncomingOrders - End - took [{}ms]", (System.currentTimeMillis() - start));
